@@ -54,7 +54,7 @@ We can install wireguard to Ubuntu using
 sudo apt install wireguard
 ```
 
-### Setting up the wireGuard Server
+### 2.1 Setting up the wireGuard Server
 Now we need to create keys that will be used for securely connecting to our wireGuard. Run the following to create them, chosing a name for the files:
 ```
 wg genkey | tee <nameOfServerPrivateKey> | wg pubkey > <nameOfServerPublicKey>
@@ -97,7 +97,7 @@ and check if we did everything right
 systemctl status wg-quick@wg0
 ```
 
-## 3. Setting up the Client(s)
+## 2.2 Setting up the Client(s)
 We need to create keys for each client (or peer, the proper terminology)
 ```
 wg genkey | tee <nameOfPeerPrivateKey> | wg pubkey > <nameOfPeerPublicKey>
