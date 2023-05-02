@@ -1,5 +1,5 @@
 # Creating a wireGuard VPN with Pihole & Unbound
-
+# THIS IS A WORK IN PROGRESS
 Hi there! So for a little project I wanted to utilize a cloud compute server to make a VPN. 
 Since this was just a small project and nothing for commerical use, I was looking for a free option and stumbled upon this repo:
 https://github.com/ripienaar/free-for-dev#major-cloud-providers
@@ -82,4 +82,51 @@ Address = <Private IPv4 from your cloud provider>/32
 ListenPort = 51820
 PrivateKey = <ServerPrivateKey>
 ```
+Ill be honest, according to my testing, it doesnt seem to matter what IP address you put in the Address= field, but I put the one assigned from the cloud provider to ensure compatibility. 
 
+Now we'll set wireguard as a service to start up on reboot automatically
+```
+systemctl enable wg-quick@wg0
+```
+then we start wireguard
+```
+systemctl start wg-quick@wg0
+```
+and check if we did everything right
+```
+systemctl status wg-quick@wg0
+```
+
+## 3. Setting up the Client(s)
+We need to create keys for each client (or peer, the proper terminology)
+```
+wg genkey | tee <nameOfPeerPrivateKey> | wg pubkey > <nameOfPeerPublicKey>
+```
+
+now lets see the private key using
+```
+cat <nameOfPeerPrivateKey>
+```
+and the public key
+```
+cat <nameOfPeerPublicKey>
+```
+Again, store these as we will need them later. 
+
+Now we have everything needed to create a config file for the client using
+```
+sudo nano <nameOfClient>.conf
+```
+and put in the following data
+```
+[Interface]
+PrivateKey = <nameOfPeerPrivateKey>                                          
+Address = <Pick a Private IPv4 that matches the scheme of the server's Private IPv4, so a server w/ 10.0.0.whateverNumber will have 10.0.0.whateverNumberlong as it is different>/32
+DNS = 1.1.1.1, 8.8.8.8
+
+[Peer]
+PublicKey = <nameOfServerPublicKey> 
+AllowedIPs = 0.0.0.0/0
+Endpoint = <Private IPv4 from your cloud provider>:51820
+```
+Keep note of the Address you put under [Interface], we're not done with it yet
