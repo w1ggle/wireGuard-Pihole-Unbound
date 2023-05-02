@@ -130,3 +130,15 @@ AllowedIPs = 0.0.0.0/0
 Endpoint = <Private IPv4 from your cloud provider>:51820
 ```
 Keep note of the Address you put under [Interface], we're not done with it yet
+
+
+
+
+
+
+
+# Verify
+Check the following links:
+https://dnsleaktest.com/
+https://ipleak.net/
+
