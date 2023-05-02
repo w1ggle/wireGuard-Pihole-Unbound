@@ -12,7 +12,7 @@ However, I was running into issues, turns out PuTTy uses its own type of keys so
 Then I was finally able to connect to the server.
 
 
-#####The first thing 
+##### The first thing 
 Then update your Linux install using 
 ```
 sudo apt update -y
@@ -28,7 +28,7 @@ reboot
 ```
 
 It should kick you out as you lose connection, and wait for your server to come back online then SSH back into it
-#Optional Start
+# Optional Start
 Now this next part is optional, but I like everything in one folder for neatness sake. In the case of wireGuard, I want everything wireGuard related in this folder, which is 
 ```
 cd /etc/wireguard/
